@@ -50,12 +50,13 @@ export const sendMessage = createAction({
         .json()
 
       responseMapping?.forEach((mapping) => {
-        if (!mapping.variableId || !mapping.item) return
+        if (!mapping.variableId) return
 
-        if (mapping.item === 'Message')
-          variables.set(mapping.variableId, res.message)
+        const item = mapping.item ?? 'Message'
 
-        if (mapping.item === 'Thread ID')
+        if (item === 'Message') variables.set(mapping.variableId, res.message)
+
+        if (item === 'Thread ID')
           variables.set(mapping.variableId, res.chat_session_id)
       })
     },
